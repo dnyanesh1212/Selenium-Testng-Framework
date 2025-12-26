@@ -1,6 +1,6 @@
 
 <suite name="Smoke Suite" parallel="classes" thread-count="1">
-
+    <parameter name="browser" value="chrome"/>
     <test name="Smoke Tests">
         <classes>
             <class name="tests.SampleTest"/>
