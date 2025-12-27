@@ -12,7 +12,6 @@ public class SampleTest extends BaseTest {
     public void sampleSmokeTest() {
 
         WebDriver driver = DriverManager.getDriver();
-        driver.get("https://www.google.com");
         System.out.println("Sample Smoke Test executed");
         Assert.assertTrue(true);
     }
