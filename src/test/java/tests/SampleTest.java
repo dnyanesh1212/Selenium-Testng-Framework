@@ -5,6 +5,7 @@ import driver.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.LoginPage;
 
 public class SampleTest extends BaseTest {
 
@@ -15,5 +16,9 @@ public class SampleTest extends BaseTest {
         System.out.println("Sample Smoke Test executed");
         Thread.sleep(5000);
         Assert.assertTrue(true);
+
+        LoginPage loginPage = new LoginPage();
+        loginPage.login("dnyana@gmail.com", "Abc@123");
+        Thread.sleep(5000);
     }
 }
