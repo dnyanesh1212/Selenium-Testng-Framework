@@ -1,9 +1,6 @@
 package pages;
 
-import utils.ElementActions;
-import utils.FrameUtils;
-import utils.MouseActions;
-import utils.WindowUtils;
+import utils.*;
 
 public class BasePage {
 
@@ -11,6 +8,7 @@ public class BasePage {
     protected MouseActions mouseActions;
     protected WindowUtils windowUtils;
     protected FrameUtils frameUtils;
+    protected AlertUtils alertUtils;
 
     public BasePage() {
 
@@ -18,6 +16,7 @@ public class BasePage {
         this.mouseActions = new MouseActions();
         this.windowUtils = new WindowUtils();
         this.frameUtils = new FrameUtils();
+        this.alertUtils = new AlertUtils();
 
     }
 }
