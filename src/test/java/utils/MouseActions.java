@@ -6,26 +6,10 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
+import static utils.WaitUtils.*;
 
 public class MouseActions {
-
-    private static final int DEFAULT_TIMEOUT = 10;
-
-    // ---------- INTERNAL HELPERS ----------
-
-    private WebElement waitForVisible(By locator) {
-        return new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(DEFAULT_TIMEOUT))
-                .until(ExpectedConditions.visibilityOfElementLocated(locator));
-    }
-
-    private WebElement waitForClickable(By locator) {
-        return new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(DEFAULT_TIMEOUT))
-                .until(ExpectedConditions.elementToBeClickable(locator));
-    }
 
     private Actions actions() {
         WebDriver driver = DriverManager.getDriver();

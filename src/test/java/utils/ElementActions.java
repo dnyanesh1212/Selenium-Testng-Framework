@@ -1,33 +1,12 @@
 package utils;
 
-import driver.DriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
+import static utils.WaitUtils.*;
+
 
 public class ElementActions {
-
-    private static final int DEFAULT_TIMEOUT = 10;
-
-    // ---------- CORE HELPERS ----------
-
-    protected WebElement waitForVisible(By locator) {
-        return new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(DEFAULT_TIMEOUT))
-                .until(ExpectedConditions.visibilityOfElementLocated(locator));
-    }
-
-    protected WebElement waitForClickable(By locator) {
-        return new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(DEFAULT_TIMEOUT))
-                .until(ExpectedConditions.elementToBeClickable(locator));
-    }
-
-    protected WebElement waitForPresence(By locator) {
-        return new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(DEFAULT_TIMEOUT))
-                .until(ExpectedConditions.presenceOfElementLocated(locator));
-    }
 
     // ---------- BASIC ACTIONS ----------
 
