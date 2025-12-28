@@ -17,19 +17,12 @@ public class TestListener implements ITestListener {
     @Override
     public void onTestStart(ITestResult result) {
 
-        String className = result.getTestClass().getRealClass().getSimpleName();
-        String methodName = result.getMethod().getMethodName();
+        ExtentReports extent = ExtentManager.getInstance();
 
-        String testFolderName = className + "_" + methodName;
-
-        String reportPath = System.getProperty("user.dir")
-                            + "/reports/"
-                            + testFolderName
-                            + "/report.html";
-
-        ExtentReports extent = ExtentManager.getInstance(reportPath);
-
-        ExtentTest test = extent.createTest(methodName, result.getMethod().getDescription());
+        ExtentTest test = extent.createTest(
+                result.getMethod().getMethodName(),
+                result.getMethod().getDescription()
+        );
 
         ExtentTestManager.setTest(test);
     }
@@ -38,30 +31,35 @@ public class TestListener implements ITestListener {
     public void onTestSuccess(ITestResult result) {
 
         ExtentTestManager.getTest().pass("Test passed successfully..!!");
+        ExtentTestManager.unload();
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
 
-        String className = result.getTestClass().getRealClass().getSimpleName();
-        String methodName = result.getMethod().getMethodName();
+        try {
+            String screenshotPath =
+                    Screenshotutils.takeScreenshot(
+                            result.getMethod().getMethodName()
+                    );
 
-        String testFolderName = className + "_" + methodName;
-        String screenShotPath = null;
-        try{
-            screenShotPath = Screenshotutils.takeScreenshot(testFolderName);
+            ExtentTest test = ExtentTestManager.getTest();
+            if (test != null) {
+                test.fail(result.getThrowable(),
+                        MediaEntityBuilder
+                                .createScreenCaptureFromPath(screenshotPath)
+                                .build());
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // NEVER throw
+        } finally {
+            ExtentTestManager.unload();
         }
-        catch (Exception e) {
-            throw new RuntimeException("Failed to capture screenshot: " + e.getMessage());
-        }
-
-        String relativePath = "screenshots/" + new File(screenShotPath).getName();
-        ExtentTestManager.getTest().fail(result.getThrowable(), MediaEntityBuilder.createScreenCaptureFromPath(relativePath).build());
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-
+        ExtentTestManager.unload();
     }
 
     @Override
@@ -71,6 +69,11 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onFinish(ITestContext context) {
-        ExtentManager.flushReports();
+
+        try {
+            ExtentManager.flushReports();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

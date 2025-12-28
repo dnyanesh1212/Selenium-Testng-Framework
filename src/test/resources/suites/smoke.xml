@@ -1,5 +1,5 @@
 
-<suite name="Smoke Suite" parallel="classes" thread-count="1">
+<suite name="Smoke Suite" parallel="classes" thread-count="2">
 
     <listeners>
         <listener class-name="listeners.TestListener"/>
@@ -9,6 +9,7 @@
     <test name="Smoke Tests">
         <classes>
             <class name="tests.SampleTest"/>
+            <class name="tests.RegressionTest"/>
         </classes>
     </test>
 
