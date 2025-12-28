@@ -16,32 +16,27 @@ public class Screenshotutils {
 
     }
 
-    public static String takeScreenshot(String testFolderName){
+    public static String takeScreenshot(String testName){
 
-        String baseDir = System.getProperty("user.dir") + "/reports/";
-        String screenshotDir = baseDir + testFolderName + "/screenshots/";
+        String screenshotDir = ExecutionContext.getReportBasePath() + "/screenshots";
 
         TakesScreenshot ts = (TakesScreenshot) DriverManager.getDriver();
 
         File source = ts.getScreenshotAs(OutputType.FILE);
 
-        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmssSSS").format(new Date());
+        String fileName = testName + "_" + System.currentTimeMillis() + ".png";
 
-        String filePath = screenshotDir + "failure_" + timestamp + ".png";
+        File destination = new File(screenshotDir, fileName);
 
-        File destination = new File(filePath);
-
-        try{
-
+        try {
             Files.createDirectories(destination.getParentFile().toPath());
             Files.copy(source.toPath(), destination.toPath());
-        }
-        catch (IOException e){
-
-            throw new RuntimeException("Failed to capture screenshot..!!", e);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to capture screenshot", e);
         }
 
-        return filePath;
+        // return RELATIVE path
+        return "screenshots/" + fileName;
     }
 
 }

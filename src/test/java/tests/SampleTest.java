@@ -2,15 +2,11 @@ package tests;
 
 import base.BaseTest;
 import driver.DriverManager;
-import listeners.TestListener;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.LoginPage;
-import utils.Screenshotutils;
 
-@Listeners(TestListener.class)
 public class SampleTest extends BaseTest {
 
     @Test(description = "First sample test")

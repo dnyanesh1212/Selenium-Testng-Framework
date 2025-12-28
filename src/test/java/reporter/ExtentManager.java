@@ -2,6 +2,7 @@ package reporter;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import utils.ExecutionContext;
 
 public final class ExtentManager {
 
@@ -9,9 +10,14 @@ public final class ExtentManager {
 
     private ExtentManager() {}
 
-    public static synchronized ExtentReports getInstance(String reportPath) {
+    public static synchronized ExtentReports getInstance() {
 
         if (extent == null) {
+
+            String reportPath =
+                    ExecutionContext.getReportBasePath()
+                            + "/extent-report.html";
+
             ExtentSparkReporter reporter =
                     new ExtentSparkReporter(reportPath);
 
