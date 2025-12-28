@@ -4,13 +4,14 @@ import driver.DriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import static utils.WaitUtils.*;
 
 public class FrameUtils {
 
     //Switch to frame using locator
     public void switchToFrame(By locator) {
         WebElement frame =
-                WaitUtils.waitForPresence(locator);
+                waitForPresence(locator);
         DriverManager.getDriver()
                 .switchTo()
                 .frame(frame);
