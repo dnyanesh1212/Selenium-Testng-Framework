@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.LoginPage;
+import reporter.Reporter;
 
 @Listeners(TestListener.class)
 public class RegressionTest extends BaseTest {
@@ -16,10 +17,13 @@ public class RegressionTest extends BaseTest {
     public void sampleRegressionTest() throws InterruptedException {
 
         WebDriver driver = DriverManager.getDriver();
-        System.out.println("Sample Smoke Test executed");
+        Thread.sleep(5000);
+        Reporter.info("Regression test started");
+        driver.get("https://www.google.com/");
+        Assert.assertEquals("123","234");
         Thread.sleep(5000);
         Assert.assertTrue(true);
-        Thread.sleep(5000);
+//        Thread.sleep(5000);
 
     }
 }
