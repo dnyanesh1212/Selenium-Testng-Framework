@@ -9,6 +9,7 @@ public class BasePage {
     protected WindowUtils windowUtils;
     protected FrameUtils frameUtils;
     protected AlertUtils alertUtils;
+    protected JSUtils jsUtils;
 
     public BasePage() {
 
@@ -17,6 +18,7 @@ public class BasePage {
         this.windowUtils = new WindowUtils();
         this.frameUtils = new FrameUtils();
         this.alertUtils = new AlertUtils();
+        this.jsUtils = new JSUtils();
 
     }
 }
