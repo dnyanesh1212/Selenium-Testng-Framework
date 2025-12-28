@@ -8,6 +8,7 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 import reporter.ExtentManager;
 import reporter.ExtentTestManager;
+import reporter.Reporter;
 import utils.Screenshotutils;
 
 import java.io.File;
@@ -25,12 +26,14 @@ public class TestListener implements ITestListener {
         );
 
         ExtentTestManager.setTest(test);
+        Reporter.info("Test execution started");
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
 
-        ExtentTestManager.getTest().pass("Test passed successfully..!!");
+        Reporter.info("Test passed successfully..!!");
+//        ExtentTestManager.getTest().pass("Test passed successfully..!!");
         ExtentTestManager.unload();
     }
 
@@ -45,7 +48,7 @@ public class TestListener implements ITestListener {
 
             ExtentTest test = ExtentTestManager.getTest();
             if (test != null) {
-                test.fail(result.getThrowable(),
+                test.fail("Test failed due to : " + result.getThrowable(),
                         MediaEntityBuilder
                                 .createScreenCaptureFromPath(screenshotPath)
                                 .build());
@@ -59,6 +62,7 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestSkipped(ITestResult result) {
+        Reporter.info("Test skipped..!!");
         ExtentTestManager.unload();
     }
 

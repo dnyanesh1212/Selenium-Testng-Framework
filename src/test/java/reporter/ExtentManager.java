@@ -16,7 +16,7 @@ public final class ExtentManager {
 
             String reportPath =
                     ExecutionContext.getReportBasePath()
-                            + "/extent-report.html";
+                            + "/report.html";
 
             ExtentSparkReporter reporter =
                     new ExtentSparkReporter(reportPath);

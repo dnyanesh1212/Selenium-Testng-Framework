@@ -6,19 +6,18 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.LoginPage;
+import reporter.Reporter;
 
 public class SampleTest extends BaseTest {
 
     @Test(description = "First sample test")
     public void sampleSmokeTest() throws InterruptedException {
 
-        WebDriver driver = DriverManager.getDriver();
-        System.out.println("Sample Smoke Test executed");
-        Thread.sleep(5000);
-        Assert.assertTrue(true);
+        Reporter.info("Navigating to login page");
 
         LoginPage loginPage = new LoginPage();
         loginPage.login("dnyana@gmail.com", "Abc@123");
-        Thread.sleep(5000);
+        Reporter.info("Logged into application", true);
+//        Thread.sleep(5000);
     }
 }
