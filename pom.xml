@@ -9,9 +9,7 @@
   <artifactId>selenium-testng-framework</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <!-- ===================== -->
-  <!-- 🔧 PROPERTIES -->
-  <!-- ===================== -->
+  <!--  PROPERTIES  -->
   <properties>
     <java.version>11</java.version>
     <selenium.version>4.20.0</selenium.version>
@@ -20,9 +18,7 @@
     <surefire.plugin.version>3.2.5</surefire.plugin.version>
   </properties>
 
-  <!-- ===================== -->
   <!-- DEPENDENCIES -->
-  <!-- ===================== -->
   <dependencies>
 
     <!-- Selenium WebDriver -->
@@ -54,11 +50,22 @@
       <version>5.1.1</version>
     </dependency>
 
+    <!-- Apache POI for Excel -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>5.2.5</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>5.2.5</version>
+    </dependency>
+
   </dependencies>
 
-  <!-- ===================== -->
   <!--  BUILD CONFIG -->
-  <!-- ===================== -->
   <build>
     <plugins>
 

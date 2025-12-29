@@ -20,6 +20,12 @@ public class Screenshotutils {
 
         String screenshotDir = ExecutionContext.getReportBasePath() + "/screenshots";
 
+        if(DriverManager.getDriver() == null){
+
+            System.out.println(" driver is null, screenshot skipped.");
+            return null;
+        }
+
         TakesScreenshot ts = (TakesScreenshot) DriverManager.getDriver();
 
         File source = ts.getScreenshotAs(OutputType.FILE);
