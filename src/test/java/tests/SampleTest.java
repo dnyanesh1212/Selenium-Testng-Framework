@@ -2,9 +2,6 @@ package tests;
 
 import base.BaseTest;
 import dataProvider.DataProviderUtils;
-import driver.DriverManager;
-import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import reporter.Reporter;

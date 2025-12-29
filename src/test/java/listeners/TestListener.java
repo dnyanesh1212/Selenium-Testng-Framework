@@ -17,43 +17,39 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult result) {
-
-        ExtentReports extent = ExtentManager.getInstance();
-
-        ExtentTest test = extent.createTest(
-                result.getMethod().getMethodName(),
-                result.getMethod().getDescription()
-        );
-
+        ExtentTest test = ExtentManager.getInstance()
+                .createTest(
+                        result.getMethod().getMethodName(),
+                        result.getMethod().getDescription()
+                );
         ExtentTestManager.setTest(test);
         Reporter.info("Test execution started");
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-
-        Reporter.info("Test passed successfully..!!");
-//        ExtentTestManager.getTest().pass("Test passed successfully..!!");
+        ExtentTest test = ExtentTestManager.getTest();
+        if (test != null) {
+            test.pass("Test passed successfully");
+        }
         ExtentTestManager.unload();
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
 
-        try {
-            String path = Screenshotutils.takeScreenshot(result.getMethod().getMethodName());
+        ExtentTest test = ExtentTestManager.getTest();
 
-            ExtentTest test = ExtentTestManager.getTest();
+        try {
+            String path = Screenshotutils.takeScreenshot(
+                    result.getMethod().getMethodName());
+
             if (test != null) {
-                if (path != null) {
-                    test.fail("Test failed due to : " + result.getThrowable(),
-                            MediaEntityBuilder.createScreenCaptureFromPath(path).build());
-                } else {
-                    test.fail(result.getThrowable().getMessage() + " (No screenshot)");
-                }
+                test.fail(result.getThrowable(),
+                        MediaEntityBuilder
+                                .createScreenCaptureFromPath(path)
+                                .build());
             }
-        } catch (Exception e) {
-            e.printStackTrace(); // NEVER throw from listener
         } finally {
             ExtentTestManager.unload();
         }
@@ -61,22 +57,13 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        Reporter.info("Test skipped..!!");
+        ExtentTestManager.getTest()
+                .skip("Test skipped");
         ExtentTestManager.unload();
     }
 
     @Override
-    public void onStart(ITestContext context) {
-
-    }
-
-    @Override
     public void onFinish(ITestContext context) {
-
-        try {
-            ExtentManager.flushReports();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ExtentManager.flushReports();
     }
 }

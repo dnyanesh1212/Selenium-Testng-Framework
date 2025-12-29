@@ -27,12 +27,12 @@ public class ExcelUtils {
 
             Sheet sheet = workbook.getSheet(sheetName);
             if (sheet == null) {
-                throw new SkipException("Sheet not found: " + sheetName);
+                throw new RuntimeException("Sheet not found: " + sheetName);
             }
 
             Row headerRow = sheet.getRow(0);
             if (headerRow == null) {
-                throw new SkipException("Header row missing in sheet: " + sheetName);
+                throw new RuntimeException("Header row missing in sheet: " + sheetName);
             }
 
             int lastRow = sheet.getLastRowNum();
@@ -57,13 +57,14 @@ public class ExcelUtils {
                     rowData.put(key, value);
                 }
 
+
                 dataList.add(rowData);
             }
 
         } catch (SkipException se) {
             throw se;
         } catch (Exception e) {
-            throw new SkipException(
+            throw new RuntimeException(
                     "Test skipped due to invalid or unreadable Excel data: " + e.getMessage()
             );
         }
