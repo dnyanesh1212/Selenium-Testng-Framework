@@ -41,20 +41,19 @@ public class TestListener implements ITestListener {
     public void onTestFailure(ITestResult result) {
 
         try {
-            String screenshotPath =
-                    Screenshotutils.takeScreenshot(
-                            result.getMethod().getMethodName()
-                    );
+            String path = Screenshotutils.takeScreenshot(result.getMethod().getMethodName());
 
             ExtentTest test = ExtentTestManager.getTest();
             if (test != null) {
-                test.fail("Test failed due to : " + result.getThrowable(),
-                        MediaEntityBuilder
-                                .createScreenCaptureFromPath(screenshotPath)
-                                .build());
+                if (path != null) {
+                    test.fail("Test failed due to : " + result.getThrowable(),
+                            MediaEntityBuilder.createScreenCaptureFromPath(path).build());
+                } else {
+                    test.fail(result.getThrowable().getMessage() + " (No screenshot)");
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace(); // NEVER throw
+            e.printStackTrace(); // NEVER throw from listener
         } finally {
             ExtentTestManager.unload();
         }
