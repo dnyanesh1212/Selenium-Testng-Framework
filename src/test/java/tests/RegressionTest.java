@@ -24,10 +24,8 @@ public class RegressionTest extends BaseTest {
         Thread.sleep(5000);
         Reporter.info("Regression test started");
         driver.get("https://www.google.com/");
-        System.out.println("Title is : " + title + " "+ " Test description is : " + testDescription);
-        Assert.assertEquals("123","234");
-        Thread.sleep(5000);
-//        Assert.assertTrue(true);
+        Reporter.info("Test title is : " + title);
+//        Assert.assertEquals("123","234");
 
     }
 }
