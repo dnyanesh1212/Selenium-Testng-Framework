@@ -1,4 +1,5 @@
 # 🚀 Selenium TestNG Automation Framework (Java)
+[![CI](https://github.com/dnyanesh1212/Selenium-Testng-Framework/actions/workflows/ci.yml/badge.svg)](https://github.com/dnyanesh1212/Selenium-Testng-Framework/actions)
 
 A **robust, scalable, CI-ready Selenium TestNG automation framework** built using **Java**, designed with **real-world best practices** followed in enterprise QA teams.
 
