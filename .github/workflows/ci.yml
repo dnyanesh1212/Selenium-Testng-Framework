@@ -43,3 +43,5 @@ jobs:
         with:
           name: extent-report
           path: reports/
+
+      - name: CI - Selenium TestNG Framework
