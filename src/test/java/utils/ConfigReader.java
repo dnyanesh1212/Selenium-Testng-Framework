@@ -53,4 +53,21 @@ public class ConfigReader {
         }
         return value;
     }
+
+    public static boolean getBoolean(String key, boolean defaultValue) {
+
+        //Command-line override
+        if (System.getProperty(key) != null) {
+            return Boolean.parseBoolean(System.getProperty(key));
+        }
+
+        //Config file value
+        String value = properties.getProperty(key);
+        if (value != null) {
+            return Boolean.parseBoolean(value);
+        }
+
+        //Default
+        return defaultValue;
+    }
 }
