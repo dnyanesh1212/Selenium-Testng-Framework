@@ -52,7 +52,7 @@ Selenium-Testng-Framework
 │       └── resources/
 │           ├── configs/            # config.properties + env configs
 │           ├── testdata/           # Excel test data
-│           └── testng.xml          # TestNG suite
+│           └── suites/             # TestNG suite
 │
 ├── reports/                       # Extent Reports output
 ├── pom.xml
