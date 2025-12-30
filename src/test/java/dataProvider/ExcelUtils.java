@@ -1,7 +1,6 @@
 package dataProvider;
 
 import org.apache.poi.ss.usermodel.*;
-import org.testng.SkipException;
 import utils.ConfigReader;
 
 import java.io.FileInputStream;
@@ -14,61 +13,67 @@ public class ExcelUtils {
 
     private ExcelUtils() {}
 
-    public static List<Map<String, String>> getTestData(String sheetName) {
+    public static List<Map<String, String>> getTestData(
+            String sheetName,
+            String testClassName
+    ) {
 
-        List<Map<String, String>> dataList = new ArrayList<>();
-        String excelPath = ConfigReader.get("inputExcel");
+        List<Map<String, String>> result = new ArrayList<>();
 
         try (
-                FileInputStream fis =
-                        new FileInputStream("src/test/resources/testdata/" + excelPath);
+                FileInputStream fis = new FileInputStream(
+                        "src/test/resources/testdata/" + ConfigReader.get("inputExcel"));
                 Workbook workbook = WorkbookFactory.create(fis)
         ) {
 
             Sheet sheet = workbook.getSheet(sheetName);
-            if (sheet == null) {
-                throw new RuntimeException("Sheet not found: " + sheetName);
-            }
-
-            Row headerRow = sheet.getRow(0);
-            if (headerRow == null) {
-                throw new RuntimeException("Header row missing in sheet: " + sheetName);
-            }
-
             int lastRow = sheet.getLastRowNum();
-            int lastCol = headerRow.getLastCellNum();
 
-            for (int i = 1; i <= lastRow; i++) {
+            for (int i = 0; i <= lastRow; i++) {
 
-                Row row = sheet.getRow(i);
-                if (row == null) {
+                Row headerRow = sheet.getRow(i);
+                if (headerRow == null) continue;
+
+                Cell firstCell = headerRow.getCell(0);
+                if (firstCell == null) continue;
+
+                //Detect header row
+                if (!"ClassName".equalsIgnoreCase(firstCell.getStringCellValue())) {
                     continue;
                 }
 
-                Map<String, String> rowData = new HashMap<>();
+                //Next row should contain class name
+                Row dataRow = sheet.getRow(i + 1);
+                if (dataRow == null) continue;
 
-                for (int j = 0; j < lastCol; j++) {
+                String className =
+                        dataRow.getCell(0).getStringCellValue();
 
-                    String key = headerRow.getCell(j).getStringCellValue();
-
-                    Cell cell = row.getCell(j);
-                    String value = (cell == null) ? "" : cell.toString().trim();
-
-                    rowData.put(key, value);
+                if (!className.equalsIgnoreCase(testClassName)) {
+                    continue;
                 }
 
+                //We found matching block
+                int colCount = headerRow.getLastCellNum();
 
-                dataList.add(rowData);
+                Map<String, String> dataMap = new HashMap<>();
+                for (int col = 0; col < colCount; col++) {
+
+                    String key = headerRow.getCell(col).getStringCellValue();
+                    Cell cell = dataRow.getCell(col);
+
+                    String value = (cell == null) ? "" : cell.toString().trim();
+                    dataMap.put(key, value);
+                }
+
+                result.add(dataMap);
+                break; //only one block per test class
             }
 
-        } catch (SkipException se) {
-            throw se;
         } catch (Exception e) {
-            throw new RuntimeException(
-                    "Test skipped due to invalid or unreadable Excel data: " + e.getMessage()
-            );
+            throw new RuntimeException("Failed to read Excel data", e);
         }
 
-        return dataList;
+        return result;
     }
 }

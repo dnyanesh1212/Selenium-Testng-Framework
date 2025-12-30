@@ -35,7 +35,7 @@ jobs:
           mvn -version
 
       - name: Run tests (Smoke Suite)
-        run: mvn clean test -Dsuite=smoke
+        run: mvn clean test -Dsuite=smoke -Dheadless=true
 
       - name: Upload Extent Reports
         if: always()
