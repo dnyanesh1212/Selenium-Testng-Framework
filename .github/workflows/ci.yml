@@ -3,9 +3,9 @@ name: CI - Selenium TestNG Framework
 # When to run CI
 on:
   push:
-    branches: [ "main", "develop", "feature/ci-pipeline" ]
+    branches: [ "main", "master", "develop", "feature/ci-pipeline" ]
   pull_request:
-    branches: [ "main", "develop" ]
+    branches: [ "main", "master", "develop" ]
 
 jobs:
   test:
