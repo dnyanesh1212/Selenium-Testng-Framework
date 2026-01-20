@@ -25,7 +25,7 @@ public class SampleTest extends BaseTest {
         Reporter.info("Navigated to login page", true);
 
         loginPage.login(username, password);
-        Reporter.info("Logged into application", true);
+        Reporter.info("Logged into application successfully", true);
 
     }
 }
